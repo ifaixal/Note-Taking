@@ -1,0 +1,16 @@
+:root {
+  --bg: #ffffff;
+  --text: #0E121B
+}
+
+[data-theme="dark"] {
+  --bg: #0E121B;
+  --text: #ffffff;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}

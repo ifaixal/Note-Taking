@@ -1,0 +1,48 @@
+.SideBar{
+    padding: 1.5rem 1rem;
+    border-right: 0.5px solid hsl(0, 0%, 80%);
+    width: 15.8%;
+    height: 100vh;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+}
+
+    .notesNavigation{
+        margin-top: 0.75rem;
+        padding: 0.5rem 0rem;
+        border-bottom: 0.5px solid hsl(0, 0%, 80%);
+    }
+
+        .AllNotes, .ArchieveNotes{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .WrapperSVGAllNotes, .WrapperSVGArchieveNotes{
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .AllNotes.active, .ArchieveNotes.active{
+            background-color: hsl(0, 0%, 95%);
+            cursor: pointer;
+        }
+
+        .WrapperSVGAllNotes:hover svg>path{
+            fill: #335CFF !important;
+        }
+
+        .WrapperSVGArchieveNotes:hover svg>path{
+            stroke: #335CFF !important;
+        }
+
+    .tags{
+        padding: 1rem 0.5rem;
+        font-size: 0.9rem;
+        color: hsl(0, 0%, 55%);
+    }
