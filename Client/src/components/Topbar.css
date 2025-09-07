@@ -1,0 +1,41 @@
+.Topbar{
+    padding: 1.5rem 2rem;
+    border-bottom: 0.5px solid hsl(0, 0%, 80%);
+    height: 5vh;
+    width: 80vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+    /* Heading H1 Tag*/
+    .PageType{
+        font-size: clamp(1.25rem, 1.4rem + 1.1vw, 1.5rem);
+        font-weight: 600;
+    }
+
+    /* Searchbar Settings Parent Container */
+    .searchBar_Settings{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+    }
+        /* Search Bar and Search Icon Container */
+        .searchBar{
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid hsl(0, 0%, 80%);
+            border-radius: 8px;
+        }
+            /* Input Field of SearchBar */
+            .searchBar>input{
+                padding: 0.25rem 0.5rem;
+                font-size: 0.9rem;
+                border: 0px;
+                min-width: 240px;
+            }
+            /* Styling */
+            .searchBar>input:focus{
+                outline: none;
+            }

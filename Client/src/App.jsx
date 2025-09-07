@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import SideBar from './components/SideBar';
+import Board from './pages/Board';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <SideBar></SideBar>
+      <Board></Board>
     </div>
   )
 }

@@ -49,3 +49,14 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+html{
+	height: 100%;
+  	overflow-y: scroll;         /* enable scroll */
+  	-ms-overflow-style: none;   /* IE/Edge */
+	scrollbar-width: none;      /* Firefox */
+}
+
+html::-webkit-scrollbar {
+	display: none;              /* Chrome/Safari */
+  }
