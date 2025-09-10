@@ -1,0 +1,26 @@
+.BottomBar{
+    border-top: 0.5px solid hsl(0, 0%, 80%);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+}
+
+    .BottomBar>div{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: clamp(0.8em, 1vw, 1em);
+        cursor: pointer;
+    }
+
+    .BottomBar>div.active{
+        background-color: rgb(235, 241, 255);
+        color: #335CFF;
+    }

@@ -1,0 +1,67 @@
+.MobileNotes{
+    height: 100vh;
+    z-index: -1;
+    padding: 1.5rem 2rem;
+}
+
+    .Home, .Search, .Archieved, .Tags, .Settings{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+        .Home>h1, .Search>h1, .Archieved>h1, .Tags>h1, .Settings>h1{
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .Archieved>p{
+            color: hsl(0, 0%, 30%);
+            font-size: 0.9em;
+        }
+
+        .Unavailable{
+            background-color: #F3F5F8;
+            padding: 0.5rem 00.5rem;
+            border-radius: 8px;
+            font-size: 0.9em;
+            border: 1px solid hsl(0, 0%, 90%);
+        }
+
+        .searchWrapper{
+            border: 0.5px solid hsl(0, 0%, 80%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            gap: 1rem;
+        }
+
+            .searchWrapper>input{
+                border: 0px;
+                outline: none;
+                font-size: 13px;
+                font-weight: 400;
+                width: 100%;
+            }
+        
+        .settingsforThemePassword{
+            padding: 0.75rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-bottom: 0.8px solid hsl(0, 0%, 90%);
+        }
+
+            .settingsforThemePassword>div{
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+        .logout{
+            padding: 0rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }

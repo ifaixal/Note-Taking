@@ -1,0 +1,75 @@
+.SettingsMenu{
+    border: 1px solid red;
+    padding: 1.5rem 2rem;
+}
+
+    .back{
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: #808080;
+        font-size: 0.9em;
+    }
+
+    .titleSettings{
+        padding: 1rem 0rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        .titleSettings>h1{
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+    .themeOptions{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+        .themeOptions>label{
+            border-radius: 16px;
+            border: 0.8px solid hsl(0, 0%, 90%);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease-in-out;
+        }
+
+            .svgText{
+                display: flex;
+                gap: 2rem;
+                align-items: center;
+            }
+
+                .svgText>label{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                .svgText>label>p{
+                    font-size: 0.8em;
+                }
+
+            .lightsvgwrapper, .darksvgwrapper{
+                padding: 0.5rem 0.5rem;
+                background-color: transparent;
+                border: 1px solid hsl(0, 0%, 90%);
+                border-radius: 8px;
+            }
+
+    .darkmode>input, .lightMode>input{
+        accent-color: #335CFF;
+        width: 15px;
+        height: 18px;
+    }
+
+    .darkmode.active, .lightMode.active {
+        border: 2px solid #007bff;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-4px);
+    }
