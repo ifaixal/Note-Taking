@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-// Schema for All Notes
-const notesSchema = new mongoose.Schema({
+// Schema for Archieved Notes
+const archieveNoteSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-    tags: [{ type: String }], 
+    tags: [{ type: String }],
     user: { type: String }
 })
 
-module.exports = mongoose.model("Note", notesSchema);
+module.exports = mongoose.model("ArchieveNote", archieveNoteSchema);
