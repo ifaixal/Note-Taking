@@ -165,4 +165,32 @@ const getArchieveNotebyTitle = async (req, res) => {
     }
 }
 
-module.exports = {deleteNote, createNote, getNotes, getNotebyTag, getNotebyTitle, archieveNote, getArchieveNote, getArchieveNotebyTag, getArchieveNotebyTitle}
+// Edit Note
+const editNote = async (req, res) =>{
+    try{
+        const {title, content, id, tags} = req.body;
+        const updated = await Note.findByIdAndUpdate(id, {title, content, tags}, { new: true, runValidators: true })
+        if (!updated)
+            res.status(400).json( {success: false, message: "Error Updating Note"} )
+        res.status(200).json( {success: true, message: "Updated Note"} )
+    }
+    catch (err){
+        res.status(404).json( {success: false, error: err.message} )
+    }
+}
+
+// Edit ArchieveNote
+const archieveEditNote = async (req, res) =>{
+    try{
+        const {title, content, id, tags} = req.body;
+        const updated = await ArchieveNote.findByIdAndUpdate(id, {title, content, tags}, { new: true, runValidators: true })
+        if (!updated)
+            res.status(400).json( {success: false, message: "Error Updating Note"} )
+        res.status(200).json( {success: true, message: "Updated Note"} )
+    }
+    catch (err){
+        res.status(404).json( {success: false, error: err.message} )
+    }
+}
+
+module.exports = {deleteNote, createNote, getNotes, getNotebyTag, getNotebyTitle, archieveNote, getArchieveNote, getArchieveNotebyTag, getArchieveNotebyTitle, editNote, archieveEditNote}
