@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './NotesList.css'
 
-const NotesList = () => {
+const NotesList = ({notes}) => {
+
   return (
     <div className='NotesList'>
       {/* Create New Note Button  */}
@@ -10,11 +11,37 @@ const NotesList = () => {
             Create New Note
         </button>
         {/* Notes list Data if Notes Available display that else display You Don't have any notes yet*/}
-        <div className="notAvailable">
-            <p>You don’t have any notes yet. Start a new note to capture your thoughts and ideas.</p>
+        {notes.length > 0 ? 
+        <div className="notes">
+          {notes.map(note => (
+            <NoteCard key={note._id} note={note} />
+          ))}
         </div>
+        : <div className="notAvailable">
+            <p>You don’t have any notes yet. Start a new note to capture your thoughts and ideas.</p>
+          </div>}
+        
     </div>
   )
 }
-
 export default NotesList
+
+const NoteCard = ({note}) => {
+
+  return (
+    <div className="noteCardWrapper">
+      <h2>{note.title}</h2>
+      <div className="tagsnoteCard">
+        {note.tags.map(tag => (
+          <span key={tag} className="tagnamenoteCard">{tag}</span>
+        ))}
+      </div>
+      <small>{new Date(note.createdAt).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit'
+      })}</small>
+    </div>
+  )
+
+}

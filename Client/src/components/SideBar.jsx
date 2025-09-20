@@ -1,7 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './SideBar.css'
+import { getTags } from '../utils/api'
 
 const SideBar = ({sectionSelected, setSectionSelected}) => {
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    getTags().then(setTags).catch(console.error);
+  }, [])
+  
 
   return (
     <div className='SideBar'>
@@ -24,7 +31,7 @@ const SideBar = ({sectionSelected, setSectionSelected}) => {
       </div>
       <div className="tags">
         <h1>Tags</h1>
-        {/* Yet to Include the Tags Logic and map those tags */}
+        <Tags tags={tags} sectionSelected={sectionSelected} setSectionSelected={setSectionSelected}/>
       </div>
     </div>
   )
@@ -32,15 +39,18 @@ const SideBar = ({sectionSelected, setSectionSelected}) => {
 
 export default SideBar
 
-const tags = ({tags}) => {
-  <div className="tags">
-    <ul>
+const Tags = ({tags, sectionSelected, setSectionSelected}) => (
+  <div className="tagsClass">
+    <ul className='eachTag'>
       {tags.map((tag, i) => (
-        <li key={i}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="#0E121B" strokLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd"/><path stroke="#0E121B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd"/></svg>
-          {tag}
-        </li>
+        <li key={i} className={`tag-item ${sectionSelected===tag ? "active" : ""}`} onClick={() => setSectionSelected(tag)}>
+          <div className="WrapperSVGArchieveNotes">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"><path stroke={sectionSelected===tag ? "#335CFF" : "#0E121B"} strokLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd"/><path stroke={sectionSelected===tag ? "#335CFF" : "#0E121B"} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd"/></svg>
+            <h3>{tag}</h3>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" style={{transform: 'rotate(180deg)', display: sectionSelected===tag ? 'flex' : 'none'}} width="12" height="12" fill="none" viewBox="0 0 24 24"><path fill="#000" fillRule="evenodd" d="M15.75 20.414 7.336 12l8.414-8.414L17.164 5l-7 7 7 7-1.414 1.414Z" clipRule="evenodd"/></svg>
+        </li>        
       ))}
     </ul>
   </div>
-}
+)

@@ -43,8 +43,8 @@ const createNote = async (req, res) => {
 // Function to get All Note for user (X)
 const getNotes = async (req, res) => {
     try {
-        // Need to be replaced later by find only by username that too after saving it with specific Username
-        const notes = await Note.find();
+        const uid = req.headers["x-user-id"];
+        const notes = await Note.find({user: uid});
         if (notes.length === 0)
             return res.status(400).json( {success: false, message: "Cannot find notes"} )
         return res.status(200).json(notes);
