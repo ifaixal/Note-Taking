@@ -1,8 +1,5 @@
 .Board{
     display: flex;
+    height: 100vh;
+    align-items: stretch;
 }
-
-    .Topbar-NotesSection{
-        display: flex;
-        flex-direction: column;
-    }

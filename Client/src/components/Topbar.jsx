@@ -1,11 +1,11 @@
 import React from 'react'
 import './Topbar.css'
 
-const Topbar = () => {
+const Topbar = ({sectionSelected}) => {
   return (
     <div className='Topbar'>
       {/* All Notes is Dynamic Will Change with respect to the Page Displayed i.e. Tags, All notes, Archieved Notes */}
-      <h1 className='PageType'>All Notes</h1>
+      <h1 className='PageType'>{sectionSelected}</h1>
       <div className="searchBar_Settings">
         <div className="searchBar">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="hsl(0, 0%, 50%)" fillRule="evenodd" d="M11.248 3.5a7.289 7.289 0 1 0 0 14.577 7.289 7.289 0 0 0 0-14.577ZM2.46 10.79a8.789 8.789 0 1 1 17.577 0 8.789 8.789 0 0 1-17.577 0Z" clipRule="evenodd"/><path fill="hsl(0, 0%, 50%)" fillRule="evenodd" d="m16.736 15.648 5.616 5.6-1.06 1.063-5.615-5.601 1.06-1.062Z" clipRule="evenodd"/></svg>

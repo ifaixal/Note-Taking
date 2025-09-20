@@ -33,3 +33,15 @@ export async function getNotes(){
         throw new Error(`Failed to fetch tags: ${res.status}`);
     return res.json();
 }
+
+export async function createNote(newNote){
+    const res = await fetch(`${API_URL}/notes/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newNote)
+    })
+
+    if (!res)
+        throw new Error(`Failed to fetch tags: ${res.status}`);
+    return res.json();
+}

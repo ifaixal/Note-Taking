@@ -5,19 +5,19 @@ import Editor from './Editor'
 import DeleteNotes from './DeleteNotes'
 import { getNotes } from '../utils/api'
 
-const NotesSection = () => {
+const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     getNotes().then(setNotes).catch(console.error);
-  }, [])
+  }, [refresh])
     
   return (
     <div className='NotesSection'>
-      <NotesList notes={notes}></NotesList>
-      {notes.length > 0 && (
+      <NotesList notes={notes} setCreate={setCreate}></NotesList>
+      {(notes.length > 0 || create) && (
         <div className="EditorDeleteNotesWrapper">
-          <Editor></Editor>
+          <Editor triggerRefresh={triggerRefresh}></Editor>
           <DeleteNotes></DeleteNotes>
         </div>
       )}

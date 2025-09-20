@@ -8,12 +8,16 @@ import Mobile from '../components/Mobile'
 const Board = () => {
   const [isLarge, setIsLarge] = useState(window.innerWidth > 768);
   const [sectionSelected, setSectionSelected] = useState('AllNotes');
+  const [create, setCreate] = useState(false);
+  const [refresh, setRefresh] = useState(false); // NEW
+
+  const triggerRefresh = () => setRefresh(prev => !prev); // toggle
 
   useEffect(() => {
     const handleResize = () => setIsLarge(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [create]);
 
   
   return (
@@ -21,15 +25,20 @@ const Board = () => {
       <div className='Board'>
         <SideBar 
           sectionSelected={sectionSelected} 
-          setSectionSelected={setSectionSelected}>
+          setSectionSelected={setSectionSelected}
+          refresh={refresh}>
         </SideBar>
         
         <div className="Topbar-NotesSection">
-          <Topbar></Topbar>
+          <Topbar sectionSelected={sectionSelected}></Topbar>
 
           <NotesSection
             sectionSelected={sectionSelected} 
-            setSectionSelected={setSectionSelected}>
+            setSectionSelected={setSectionSelected}
+            create={create}
+            setCreate={setCreate}
+            refresh={refresh}
+            triggerRefresh={triggerRefresh}>
           </NotesSection>
         </div>
       </div>)

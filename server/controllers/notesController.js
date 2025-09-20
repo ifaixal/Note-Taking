@@ -27,10 +27,9 @@ const createNote = async (req, res) => {
             return res.status(400).json({success: false, message: "Content is Required"})
         if (!tags)
             return res.status(400).json({success: false, message: "Tags is Required"})
-        // Validate at Later Stages
-        // if (!user)
-        //     res.status(400).json({success: false, message: "User Missing is Required"})
-        const note = new Note({title, content, tags});
+        if (!user)
+            return res.status(400).json({success: false, message: "User Missing is Required"})
+        const note = new Note({title, content, tags, user});
         const saveNote = await note.save();
 
         return res.status(201).json({success: true, message: "Note Created Successfully"})
