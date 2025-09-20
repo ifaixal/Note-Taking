@@ -7,6 +7,7 @@ import Mobile from '../components/Mobile'
 
 const Board = () => {
   const [isLarge, setIsLarge] = useState(window.innerWidth > 768);
+  const [sectionSelected, setSectionSelected] = useState('AllNotes');
 
   useEffect(() => {
     const handleResize = () => setIsLarge(window.innerWidth > 768);
@@ -18,10 +19,18 @@ const Board = () => {
   return (
     isLarge ? (
       <div className='Board'>
-        <SideBar></SideBar>
+        <SideBar 
+          sectionSelected={sectionSelected} 
+          setSectionSelected={setSectionSelected}>
+        </SideBar>
+        
         <div className="Topbar-NotesSection">
           <Topbar></Topbar>
-          <NotesSection></NotesSection>
+
+          <NotesSection
+            sectionSelected={sectionSelected} 
+            setSectionSelected={setSectionSelected}>
+          </NotesSection>
         </div>
       </div>)
     : (

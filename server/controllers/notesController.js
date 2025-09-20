@@ -6,11 +6,11 @@ const deleteNote = async (req, res) => {
     try{
         const deleted = await Note.findByIdAndDelete(req.params.id);
         if (!deleted)
-            res.status(400).json({ message: "Cannot Find the Note" })
-        res.json({ message: "Note deleted successfully" });
+            return res.status(400).json({ message: "Cannot Find the Note" })
+        return res.json({ message: "Note deleted successfully" });
     }
     catch (err) {
-        res.status(404).json( {error: err.message });
+        return res.status(404).json( {error: err.message });
     }
 };
 
@@ -22,21 +22,21 @@ const createNote = async (req, res) => {
         const {title, content, tags, user} = req.body;
 
         if (!title)
-            res.status(400).json({success: false, message: "Title is Required"})
+            return res.status(400).json({success: false, message: "Title is Required"})
         if (!content)
-            res.status(400).json({success: false, message: "Content is Required"})
+            return res.status(400).json({success: false, message: "Content is Required"})
         if (!tags)
-            res.status(400).json({success: false, message: "Tags is Required"})
+            return res.status(400).json({success: false, message: "Tags is Required"})
         // Validate at Later Stages
         // if (!user)
         //     res.status(400).json({success: false, message: "User Missing is Required"})
         const note = new Note({title, content, tags});
         const saveNote = await note.save();
 
-        res.status(201).json({success: true, message: "Note Created Successfully"})
+        return res.status(201).json({success: true, message: "Note Created Successfully"})
     }
     catch (err) {
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
@@ -46,11 +46,36 @@ const getNotes = async (req, res) => {
         // Need to be replaced later by find only by username that too after saving it with specific Username
         const notes = await Note.find();
         if (notes.length === 0)
-            res.status(400).json( {success: false, message: "Cannot find notes"} )
-        res.status(200).json(notes);
+            return res.status(400).json( {success: false, message: "Cannot find notes"} )
+        return res.status(200).json(notes);
     }
     catch (err) {
-        res.status(404).json( {success: false, error: err.message })
+        return res.status(404).json( {success: false, error: err.message })
+    }
+}
+
+// Function to get Tag of Archieve Notes for User (X)
+const getTagOfNote = async (req, res) => {
+    try{
+        const userId = req.headers["x-user-id"];
+        if (!userId)
+            return res.status(401).json({success: false, message: "Cannot Find User"});
+
+        const uniqueTagsAgg  = await Note.aggregate([
+            { $match: { user: userId } },
+            { $unwind: "$tags" },                      // flatten arrays
+            { $group: { _id: null, tags: { $addToSet: "$tags" } } }, // unique
+            { $project: { _id: 0, tags: 1 } }
+        ]);
+
+        const uniqueTags = uniqueTagsAgg[0]?.tags || [];
+
+        if (uniqueTags.length === 0)
+            return res.status(400).json({success: false, message: "No tags to sent"});
+        return res.status(200).json(uniqueTags);
+    }
+    catch (err){
+        return res.status(404).json({success: false, error: err.message})
     }
 }
 
@@ -60,11 +85,11 @@ const getNotebyTag = async (req, res) => {
         const tag = req.params.tag;
         const notebyTag = await Note.find({tags: tag})
         if (notebyTag.length === 0)
-            res.status(400).json({ success: false, message: "Cannot find note by specified Tag"})
-        res.status(200).json(notebyTag);
+            return res.status(400).json({ success: false, message: "Cannot find note by specified Tag"})
+        return res.status(200).json(notebyTag);
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
@@ -75,11 +100,11 @@ const getNotebyTitle = async (req, res) => {
         const title = req.params.title;
         const notebyTitle = await Note.find({title: title})
         if (notebyTitle.length === 0)
-            res.status(400).json( {success: false, message: "Cannot find note by specified Title"} )
-        res.status(200).json(notebyTitle);
+            return res.status(400).json( {success: false, message: "Cannot find note by specified Title"} )
+        return res.status(200).json(notebyTitle);
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
@@ -102,7 +127,7 @@ const archieveNote = async (req, res) => {
         const getNotebyID = await Note.findById(noteID);
 
         if (getNotebyID.length === 0)
-            res.status(400).json({ success: false, message: "Couldn't find the Note"} )
+            return res.status(400).json({ success: false, message: "Couldn't find the Note"} )
 
 
         const title = getNotebyID.title;
@@ -115,9 +140,9 @@ const archieveNote = async (req, res) => {
 
         await Note.findByIdAndDelete(noteID);
 
-        res.status(200).json({ success: true, message: "Archieved Note"} );
+        return res.status(200).json({ success: true, message: "Archieved Note"} );
     }   catch (err){
-        res.status(404).json( { success: false, error: err.message} )
+        return res.status(404).json( { success: false, error: err.message} )
     }
 }
 
@@ -127,12 +152,32 @@ const getArchieveNote = async (req, res) => {
         // Will be replaced later by find by specific Person
         const notes = await ArchieveNote.find();
         if (notes.length === 0)
-            res.status(400).json( { success:false, message: "No Archieve Notes" } )
+            return res.status(400).json( { success:false, message: "No Archieve Notes" } )
         
-        res.status(200).json(notes)
+        return res.status(200).json(notes)
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
+    }
+}
+
+// Function to get Tag of Archieve Notes for User (X)
+const getTagOfArchieve = async (req, res) => {
+    try{
+        const uniqueTagsAgg  = await ArchieveNote.aggregate([
+            { $unwind: "$tags" },                      // flatten arrays
+            { $group: { _id: null, tags: { $addToSet: "$tags" } } }, // unique
+            { $project: { _id: 0, tags: 1 } }
+        ]);
+
+        const uniqueTags = uniqueTagsAgg[0]?.tags || [];
+
+        if (uniqueTags.length === 0)
+            return res.status(400).json({success: false, message: "No tags to sent"});
+        return res.status(200).json(uniqueTags);
+    }
+    catch (err){
+        return res.status(404).json({success: false, error: err.message})
     }
 }
 
@@ -142,11 +187,11 @@ const getArchieveNotebyTag = async (req, res) => {
         const tag = req.params.tag;
         const notebyTag = await ArchieveNote.find({tags: tag})
         if (notebyTag.length === 0)
-            res.status(400).json( {success: false, message: "Note do not exist"} );
-        res.status(200).json(notebyTag);
+            return res.status(400).json( {success: false, message: "Note do not exist"} );
+        return res.status(200).json(notebyTag);
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
@@ -157,11 +202,11 @@ const getArchieveNotebyTitle = async (req, res) => {
         const titles = req.params.title;
         const notebyTitle = await ArchieveNote.find({title: titles})
         if (notebyTitle.length === 0)
-            res.status(400).json( {success: false, message: "Note do not exist"} );
-        res.status(200).json(notebyTitle);
+            return res.status(400).json( {success: false, message: "Note do not exist"} );
+        return res.status(200).json(notebyTitle);
     }
     catch (err){
-        res.status(404).json( {success: false, message: "Cannot get notes from Backend"} )
+        return res.status(404).json( {success: false, message: "Cannot get notes from Backend"} )
     }
 }
 
@@ -171,11 +216,11 @@ const editNote = async (req, res) =>{
         const {title, content, id, tags} = req.body;
         const updated = await Note.findByIdAndUpdate(id, {title, content, tags}, { new: true, runValidators: true })
         if (!updated)
-            res.status(400).json( {success: false, message: "Error Updating Note"} )
-        res.status(200).json( {success: true, message: "Updated Note"} )
+            return res.status(400).json( {success: false, message: "Error Updating Note"} )
+        return res.status(200).json( {success: true, message: "Updated Note"} )
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
@@ -185,12 +230,12 @@ const archieveEditNote = async (req, res) =>{
         const {title, content, id, tags} = req.body;
         const updated = await ArchieveNote.findByIdAndUpdate(id, {title, content, tags}, { new: true, runValidators: true })
         if (!updated)
-            res.status(400).json( {success: false, message: "Error Updating Note"} )
-        res.status(200).json( {success: true, message: "Updated Note"} )
+            return res.status(400).json( {success: false, message: "Error Updating Note"} )
+        return res.status(200).json( {success: true, message: "Updated Note"} )
     }
     catch (err){
-        res.status(404).json( {success: false, error: err.message} )
+        return res.status(404).json( {success: false, error: err.message} )
     }
 }
 
-module.exports = {deleteNote, createNote, getNotes, getNotebyTag, getNotebyTitle, archieveNote, getArchieveNote, getArchieveNotebyTag, getArchieveNotebyTitle, editNote, archieveEditNote}
+module.exports = {deleteNote, createNote, getNotes, getTagOfNote, getNotebyTag, getNotebyTitle, archieveNote, getArchieveNote, getTagOfArchieve, getArchieveNotebyTag, getArchieveNotebyTitle, editNote, archieveEditNote}
