@@ -3,21 +3,38 @@ import './NotesSection.css'
 import NotesList from './NotesList'
 import Editor from './Editor'
 import DeleteNotes from './DeleteNotes'
-import { getNotes } from '../utils/api'
+import { getNotebyTitle, getNotes } from '../utils/api'
 
 const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
   const [notes, setNotes] = useState([]);
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     getNotes().then(setNotes).catch(console.error);
   }, [refresh])
+
+  const handleNoteClick = async (title) => {
+    try {
+      const note = await getNotebyTitle(title);
+      setSelectedNote(note);
+      setCreate(true); // open editor when a note is clicked
+    } catch (err) {
+      console.error(err);
+    }
+  };
     
   return (
     <div className='NotesSection'>
-      <NotesList notes={notes} setCreate={setCreate}></NotesList>
+      <NotesList 
+        notes={notes} 
+        setCreate={setCreate}
+        setSelectedNote={setSelectedNote}
+        handleNoteClick={handleNoteClick}></NotesList>
       {(notes.length > 0 || create) && (
         <div className="EditorDeleteNotesWrapper">
-          <Editor triggerRefresh={triggerRefresh}></Editor>
+          <Editor 
+            triggerRefresh={triggerRefresh}
+            selectedNote={selectedNote}></Editor>
           <DeleteNotes></DeleteNotes>
         </div>
       )}

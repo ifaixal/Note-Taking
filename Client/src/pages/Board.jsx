@@ -7,7 +7,7 @@ import Mobile from '../components/Mobile'
 
 const Board = () => {
   const [isLarge, setIsLarge] = useState(window.innerWidth > 768);
-  const [sectionSelected, setSectionSelected] = useState('AllNotes');
+  const [sectionSelected, setSectionSelected] = useState('All Notes');
   const [create, setCreate] = useState(false);
   const [refresh, setRefresh] = useState(false); // NEW
 

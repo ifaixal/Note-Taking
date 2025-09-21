@@ -22,8 +22,7 @@
         }
 
         .titleWrapper>input::placeholder{
-            opacity: 1;
-            color: black;
+            color: rgb(94, 94, 94);
         }
 
         .tagsTimeWrapper{

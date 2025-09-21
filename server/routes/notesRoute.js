@@ -7,7 +7,7 @@ router.post('/', createNote);
 router.get('/', getNotes);
 router.get('/tags', getTagOfNote);
 router.get('/tags/:tag', getNotebyTag);
-router.get('/Title/:title', getNotebyTitle);
+router.get('/:title', getNotebyTitle);
 router.patch('/:id', archieveNote);
 router.get('/archieve', getArchieveNote);
 router.get('/archieve/tags', getTagOfArchieve);

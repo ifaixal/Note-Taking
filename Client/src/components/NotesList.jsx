@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './NotesList.css'
 
-const NotesList = ({notes, setCreate}) => {
+const NotesList = ({notes, setCreate, handleNoteClick, setSelectedNote}) => {
 
   return (
     <div className='NotesList'>
       {/* Create New Note Button  */}
-        <button className='newNotebutton' onClick={()=>setCreate(true)}>
+        <button className='newNotebutton' onClick={()=> {setCreate(true); setSelectedNote(null)}}>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24"><path fill="white" d="M12 5a.75.75 0 0 1 .75.75V11H18a.75.75 0 0 1 0 1.5h-5.25v5.25a.75.75 0 0 1-1.5 0V12.5H6A.75.75 0 0 1 6 11h5.25V5.75A.75.75 0 0 1 12 5Z"/></svg>
             Create New Note
         </button>
@@ -14,7 +14,7 @@ const NotesList = ({notes, setCreate}) => {
         {notes.length > 0 ? 
         <div className="notes">
           {notes.map(note => (
-            <NoteCard key={note._id} note={note} />
+            <NoteCard key={note._id} note={note} onClick={()=>handleNoteClick(note.title)}/>
           ))}
         </div>
         : <div className="notAvailable">
@@ -26,10 +26,10 @@ const NotesList = ({notes, setCreate}) => {
 }
 export default NotesList
 
-const NoteCard = ({note}) => {
+const NoteCard = ({note, onClick}) => {
 
   return (
-    <div className="noteCardWrapper">
+    <div className="noteCardWrapper" onClick={onClick}>
       <h2>{note.title}</h2>
       <div className="tagsnoteCard">
         {note.tags.map(tag => (
