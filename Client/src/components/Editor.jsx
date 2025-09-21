@@ -44,6 +44,7 @@ const Editor = ({triggerRefresh, selectedNote}) => {
       return;
     }
     try {
+      
       const newNote = {
         title,
         content: description,
@@ -52,9 +53,9 @@ const Editor = ({triggerRefresh, selectedNote}) => {
       };
 
       const note = Array.isArray(selectedNote) ? selectedNote[0] : selectedNote;
-      
+  
       if (note?._id) {
-        newNote._id = note._id;
+        newNote.id = note._id;
         await updateNote(newNote);
         toast.success("Note updated");
       } else {
@@ -65,13 +66,7 @@ const Editor = ({triggerRefresh, selectedNote}) => {
       triggerRefresh();
       
     } catch (err) {
-      if (err.message.includes("exists"))
-        toast.error("A note with this title exists")
-      else if (err.message.includes("update"))
-        console.log(err.message)
-      else
-        toast.error("Network or server error while saving note");
-
+        console.log(err.message);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './NotesList.css'
 
 const NotesList = ({notes, setCreate, handleNoteClick, setSelectedNote}) => {
@@ -14,7 +14,7 @@ const NotesList = ({notes, setCreate, handleNoteClick, setSelectedNote}) => {
         {notes.length > 0 ? 
         <div className="notes">
           {notes.map(note => (
-            <NoteCard key={note._id} note={note} onClick={()=>handleNoteClick(note.title)}/>
+            <NoteCard key={note._id} note={note} onClick={()=>handleNoteClick(note._id)}/>
           ))}
         </div>
         : <div className="notAvailable">

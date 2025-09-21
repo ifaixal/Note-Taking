@@ -3,7 +3,7 @@ import './NotesSection.css'
 import NotesList from './NotesList'
 import Editor from './Editor'
 import DeleteNotes from './DeleteNotes'
-import { getNotebyTitle, getNotes } from '../utils/api'
+import { getNotebyID, getNotes } from '../utils/api'
 
 const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
   const [notes, setNotes] = useState([]);
@@ -13,9 +13,10 @@ const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
     getNotes().then(setNotes).catch(console.error);
   }, [refresh])
 
-  const handleNoteClick = async (title) => {
+  const handleNoteClick = async (id) => {
     try {
-      const note = await getNotebyTitle(title);
+      console.log(id);
+      const note = await getNotebyID(id);
       setSelectedNote(note);
       setCreate(true); // open editor when a note is clicked
     } catch (err) {

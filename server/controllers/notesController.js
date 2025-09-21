@@ -78,29 +78,14 @@ const getTagOfNote = async (req, res) => {
     }
 }
 
-// // Function to getNotes by Tag for user (X)
-const getNotebyTag = async (req, res) => {
+// // Function to getNotes by ID for user (X)
+const getNotebyID = async (req, res) => {
     try{
-        const tag = req.params.tag;
-        const notebyTag = await Note.find({tags: tag})
-        if (notebyTag.length === 0)
-            return res.status(400).json({ success: false, message: "Cannot find note by specified Tag"})
-        return res.status(200).json(notebyTag);
-    }
-    catch (err){
-        return res.status(404).json( {success: false, error: err.message} )
-    }
-}
-
-// // Function to getNotes by Title for user (X)
-// An extra feature we can add is by getting from the database notes that has title no exact match is necessary
-const getNotebyTitle = async (req, res) => {
-    try{
-        const title = req.params.title;
-        const notebyTitle = await Note.find({title: title})
-        if (notebyTitle.length === 0)
-            return res.status(400).json( {success: false, message: "Cannot find note by specified Title"} )
-        return res.status(200).json(notebyTitle);
+        const id = req.params.id;
+        const notebyID = await Note.findById(id);
+        if (!notebyID)
+            return res.status(400).json( {success: false, message: "Cannot find note by specified ID"} )
+        return res.status(200).json(notebyID);
     }
     catch (err){
         return res.status(404).json( {success: false, error: err.message} )
@@ -180,35 +165,6 @@ const getTagOfArchieve = async (req, res) => {
     }
 }
 
-// // Function to getArchieveNote by Tag for user (X)
-const getArchieveNotebyTag = async (req, res) => {
-    try{
-        const tag = req.params.tag;
-        const notebyTag = await ArchieveNote.find({tags: tag})
-        if (notebyTag.length === 0)
-            return res.status(400).json( {success: false, message: "Note do not exist"} );
-        return res.status(200).json(notebyTag);
-    }
-    catch (err){
-        return res.status(404).json( {success: false, error: err.message} )
-    }
-}
-
-// Function to getArchieveNotes by Title for user (X)
-// An extra feature we can add is by getting from the database notes that has title no exact match is necessary
-const getArchieveNotebyTitle = async (req, res) => {
-    try{
-        const titles = req.params.title;
-        const notebyTitle = await ArchieveNote.find({title: titles})
-        if (notebyTitle.length === 0)
-            return res.status(400).json( {success: false, message: "Note do not exist"} );
-        return res.status(200).json(notebyTitle);
-    }
-    catch (err){
-        return res.status(404).json( {success: false, message: "Cannot get notes from Backend"} )
-    }
-}
-
 // Edit Note
 const editNote = async (req, res) =>{
     try{
@@ -237,4 +193,4 @@ const archieveEditNote = async (req, res) =>{
     }
 }
 
-module.exports = {deleteNote, createNote, getNotes, getTagOfNote, getNotebyTag, getNotebyTitle, archieveNote, getArchieveNote, getTagOfArchieve, getArchieveNotebyTag, getArchieveNotebyTitle, editNote, archieveEditNote}
+module.exports = {deleteNote, createNote, getNotes, getTagOfNote, getNotebyID, archieveNote, getArchieveNote, getTagOfArchieve, editNote, archieveEditNote}

@@ -35,15 +35,6 @@ export async function getNotes(){
 }
 
 export async function createNote(newNote){
-    const existingNote = await getNotebyTitle(newNote.title);
-
-    if (
-        (Array.isArray(existingNote) && existingNote.length > 0) ||
-        (existingNote && existingNote.title)
-      ) {
-        throw new Error("Note with this title already exists");
-    }
-
     const res = await fetch(`${API_URL}/notes/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -55,24 +46,27 @@ export async function createNote(newNote){
     return res.json();
 }
 
-export async function getNotebyTitle(title){
-    const res = await fetch(`${API_URL}/notes/${title}`, {
+export async function getNotebyID(id){
+    const res = await fetch(`${API_URL}/notes/${id}`, {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" }
     })
-    if (!res)
-        throw new Error(`Failed to get note by Title: ${res.status}`);
+
+    if (!res.ok)
+        throw new Error(`Failed to fetch note by id: ${res.status}`)
+    
     return res.json();
 }
 
-export async function updateNote(newNote){
-    const res = await fetch(`${API_URL}/edit`, {
-        method: "POST",
+export async function updateNote(note){
+    console.log(note);
+    const res = await fetch(`${API_URL}/notes/edit`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newNote)
+        body: JSON.stringify(note)
     })
 
-    if (!res)
+    if (!res.ok)
         throw new Error(`Failed to update note: ${res.status}`)
     return res.json();
 }
