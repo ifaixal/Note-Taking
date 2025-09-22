@@ -30,13 +30,20 @@ const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
         notes={notes} 
         setCreate={setCreate}
         setSelectedNote={setSelectedNote}
-        handleNoteClick={handleNoteClick}></NotesList>
+        handleNoteClick={handleNoteClick}>
+      </NotesList>
+      
       {(notes.length > 0 || create) && (
         <div className="EditorDeleteNotesWrapper">
           <Editor 
             triggerRefresh={triggerRefresh}
-            selectedNote={selectedNote}></Editor>
-          <DeleteNotes></DeleteNotes>
+            selectedNote={selectedNote}>
+          </Editor>
+
+          <DeleteNotes 
+            triggerRefresh={triggerRefresh}
+            selectedNote={selectedNote}>
+          </DeleteNotes>
         </div>
       )}
     </div>

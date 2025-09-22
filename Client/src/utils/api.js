@@ -59,7 +59,6 @@ export async function getNotebyID(id){
 }
 
 export async function updateNote(note){
-    console.log(note);
     const res = await fetch(`${API_URL}/notes/edit`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -68,5 +67,16 @@ export async function updateNote(note){
 
     if (!res.ok)
         throw new Error(`Failed to update note: ${res.status}`)
+    return res.json();
+}
+
+export async function deleteNote(id){
+    const res = await fetch(`${API_URL}/notes/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    })
+
+    if (!res.ok)
+        throw new Error(`Failed to delete note: ${res.status}`)
     return res.json();
 }

@@ -16,4 +16,13 @@
         min-width: 15vw;
         height: 40px;
         border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .ArchieveNote:hover svg path{
+        stroke: #335CFF !important;
+    }
+
+    .DeleteNote:hover svg path{
+        stroke: #335CFF !important;
     }
