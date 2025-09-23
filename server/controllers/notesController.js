@@ -92,6 +92,24 @@ const getNotebyID = async (req, res) => {
     }
 }
 
+const getNotesbyTag = async (req, res) => {
+    try{
+        const { tag, id } = req.params;
+
+        const notes = await Note.find({
+            tags: tag,
+            user: id
+        })
+
+        if (!notes)
+            return res.status(401).json({success: false, message: "Tag do not exist"});
+
+        return res.status(200).json(notes);
+    }   catch (err) {
+        return res.status(404).json( {success: false, error: err.message} )
+    }
+}
+
 // Function to getNotes by Content for user (X)
 // External search engines (ElasticSearch / Atlas Search) Explore these things and then implement this Function
 // const getNotebyContent = async (req, res) => {
@@ -198,4 +216,15 @@ const archieveEditNote = async (req, res) =>{
     }
 }
 
-module.exports = {deleteNote, createNote, getNotes, getTagOfNote, getNotebyID, archieveNote, getArchieveNote, getTagOfArchieve, editNote, archieveEditNote}
+module.exports = {
+    deleteNote, 
+    createNote, 
+    getNotes, 
+    getTagOfNote, 
+    getNotebyID, 
+    archieveNote, 
+    getArchieveNote, 
+    getTagOfArchieve, 
+    editNote, 
+    archieveEditNote,
+    getNotesbyTag}

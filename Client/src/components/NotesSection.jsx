@@ -3,7 +3,7 @@ import './NotesSection.css'
 import NotesList from './NotesList'
 import Editor from './Editor'
 import DeleteNotes from './DeleteNotes'
-import { getArchieveNote, getNotebyID, getNotes } from '../utils/api'
+import { getArchieveNote, getNotebyID, getNotes, getNotesbyTag } from '../utils/api'
 
 const NotesSection = ({sectionSelected, create, setCreate, refresh, triggerRefresh, notes, setNotes}) => {
   const [selectedNote, setSelectedNote] = useState(null);
@@ -13,6 +13,8 @@ const NotesSection = ({sectionSelected, create, setCreate, refresh, triggerRefre
       getNotes().then(setNotes).catch(console.error);
     else if (sectionSelected === 'Archieve Notes')
       getArchieveNote().then(setNotes).catch(console.error);
+    else
+      getNotesbyTag(sectionSelected).then(setNotes).catch(console.error);
 
   }, [refresh, sectionSelected])
 

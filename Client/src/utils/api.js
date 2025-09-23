@@ -118,3 +118,18 @@ export async function getTagOfArchieve() {
         throw new Error(`Failed to fetch tags: ${res.status}`);
     return res.json();
 }
+
+export async function getNotesbyTag(tag) {
+    const uid = getOrCreateUID();
+
+    const res = await fetch(`${API_URL}/notes/${uid}/${tag}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+
+    if (!res)
+        throw new Error(`Failed to fetch tags: ${res.status}`);
+    return res.json();
+}
