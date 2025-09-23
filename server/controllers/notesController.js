@@ -117,9 +117,9 @@ const archieveNote = async (req, res) => {
         const title = getNotebyID.title;
         const content = getNotebyID.content;
         const tags = getNotebyID.tags;
-        // user as well
-        // const user = getNotebyID.user;
-        const archieveNote = new ArchieveNote({title, content, tags});
+        const user = getNotebyID.user;
+
+        const archieveNote = new ArchieveNote({title, content, tags, user});
         await archieveNote.save();
 
         await Note.findByIdAndDelete(noteID);
@@ -148,7 +148,12 @@ const getArchieveNote = async (req, res) => {
 // Function to get Tag of Archieve Notes for User (X)
 const getTagOfArchieve = async (req, res) => {
     try{
+        const userId = req.headers["x-user-id"];
+        if (!userId)
+            return res.status(401).json({success: false, message: "Cannot Find User"});
+
         const uniqueTagsAgg  = await ArchieveNote.aggregate([
+            { $match: { user: userId } },
             { $unwind: "$tags" },                      // flatten arrays
             { $group: { _id: null, tags: { $addToSet: "$tags" } } }, // unique
             { $project: { _id: 0, tags: 1 } }

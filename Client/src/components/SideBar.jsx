@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import './SideBar.css'
-import { getTags } from '../utils/api'
+import { getTagOfArchieve, getTags } from '../utils/api'
 
 const SideBar = ({sectionSelected, setSectionSelected, refresh}) => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    getTags().then(setTags).catch(console.error);
-  }, [refresh])
-  
+    if (sectionSelected === 'All Notes')
+      getTags().then(setTags).catch(console.error);
+    else if (sectionSelected === 'Archieve Notes')
+      getTagOfArchieve().then(setTags).catch(console.error);
+
+  }, [refresh, sectionSelected])
 
   return (
     <div className='SideBar'>

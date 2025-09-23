@@ -10,6 +10,7 @@ const Board = () => {
   const [sectionSelected, setSectionSelected] = useState('All Notes');
   const [create, setCreate] = useState(false);
   const [refresh, setRefresh] = useState(false); // NEW
+  const [notes, setNotes] = useState([]);
 
   const triggerRefresh = () => setRefresh(prev => !prev); // toggle
 
@@ -18,7 +19,6 @@ const Board = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [create]);
-
   
   return (
     isLarge ? (
@@ -26,7 +26,8 @@ const Board = () => {
         <SideBar 
           sectionSelected={sectionSelected} 
           setSectionSelected={setSectionSelected}
-          refresh={refresh}>
+          refresh={refresh}
+          setNotes={setNotes}>
         </SideBar>
         
         <div className="Topbar-NotesSection">
@@ -38,7 +39,9 @@ const Board = () => {
             create={create}
             setCreate={setCreate}
             refresh={refresh}
-            triggerRefresh={triggerRefresh}>
+            triggerRefresh={triggerRefresh}
+            notes={notes}
+            setNotes={setNotes}>
           </NotesSection>
         </div>
       </div>)

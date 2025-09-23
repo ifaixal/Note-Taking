@@ -3,15 +3,18 @@ import './NotesSection.css'
 import NotesList from './NotesList'
 import Editor from './Editor'
 import DeleteNotes from './DeleteNotes'
-import { getNotebyID, getNotes } from '../utils/api'
+import { getArchieveNote, getNotebyID, getNotes } from '../utils/api'
 
-const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
-  const [notes, setNotes] = useState([]);
+const NotesSection = ({sectionSelected, create, setCreate, refresh, triggerRefresh, notes, setNotes}) => {
   const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
-    getNotes().then(setNotes).catch(console.error);
-  }, [refresh])
+    if (sectionSelected === 'All Notes')
+      getNotes().then(setNotes).catch(console.error);
+    else if (sectionSelected === 'Archieve Notes')
+      getArchieveNote().then(setNotes).catch(console.error);
+
+  }, [refresh, sectionSelected])
 
   const handleNoteClick = async (id) => {
     try {
@@ -42,7 +45,8 @@ const NotesSection = ({create, setCreate, refresh, triggerRefresh}) => {
 
           <DeleteNotes 
             triggerRefresh={triggerRefresh}
-            selectedNote={selectedNote}>
+            selectedNote={selectedNote}
+            setSelectedNote={setSelectedNote}>
           </DeleteNotes>
         </div>
       )}

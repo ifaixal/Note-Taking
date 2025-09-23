@@ -80,3 +80,41 @@ export async function deleteNote(id){
         throw new Error(`Failed to delete note: ${res.status}`)
     return res.json();
 }
+
+export async function archieveNote(id){
+    const res = await fetch(`${API_URL}/notes/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+    })
+
+    if (!res.ok)
+        throw new Error(`Failed to archieve note: ${res.status}`)
+    return res.json();
+}
+
+export async function getArchieveNote(){
+    const res = await fetch(`${API_URL}/notes/archieve`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+
+    if (!res.ok)
+        throw new Error(`Failed to get Archieve note: ${res.status}`)
+    return res.json();
+}
+
+export async function getTagOfArchieve() {
+    const uid = getOrCreateUID();
+
+    const res = await fetch(`${API_URL}/notes/archieve/tags`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "x-user-id": uid
+        }
+    })
+
+    if (!res)
+        throw new Error(`Failed to fetch tags: ${res.status}`);
+    return res.json();
+}
