@@ -114,7 +114,7 @@ export async function getTagOfArchieve() {
         }
     })
 
-    if (!res)
+    if (!res.ok)
         throw new Error(`Failed to fetch tags: ${res.status}`);
     return res.json();
 }

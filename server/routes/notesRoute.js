@@ -15,14 +15,14 @@ const {deleteNote,
 router.post('/', createNote);
 router.get('/', getNotes);
 router.get('/tags', getTagOfNote);
-router.get('/:id/:tag', getNotesbyTag);
-
-router.patch('/edit', editNote);
-router.post('/editArchieve', archieveEditNote);
 
 router.get('/archieve', getArchieveNote);
 router.get('/archieve/tags', getTagOfArchieve);
 
+router.patch('/edit', editNote);
+router.post('/editArchieve', archieveEditNote);
+
+router.get('/:id/:tag', getNotesbyTag);
 router.delete('/:id', deleteNote);
 router.get('/:id', getNotebyID);
 router.patch('/:id', archieveNote);

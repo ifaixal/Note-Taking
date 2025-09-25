@@ -6,10 +6,16 @@ const SideBar = ({sectionSelected, setSectionSelected, refresh}) => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    if (sectionSelected === 'All Notes')
+    if (sectionSelected === 'All Notes'){
       getTags().then(setTags).catch(console.error);
+    }
+      
     else if (sectionSelected === 'Archieve Notes')
-      getTagOfArchieve().then(setTags).catch(console.error);
+    {
+      getTagOfArchieve().then((res) => {setTags(res); console.log(res);}).catch(console.error);
+
+    }
+      
 
   }, [refresh, sectionSelected])
 
