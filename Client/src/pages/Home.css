@@ -1,0 +1,12 @@
+.HomeWrapper{
+    display: flex;
+    height: 100vh;
+}
+
+    .right-side{
+        flex: 1;
+    }
+
+        .homeSection{
+            display: flex;
+        }

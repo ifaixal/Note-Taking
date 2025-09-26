@@ -1,0 +1,44 @@
+.Header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+    .Header>h1{
+        font-size: clamp(1em, 1.5em, 1.75em);
+        font-weight: 600;
+    }
+
+    .search-settings-wrapper{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }    
+
+        .searchWrapper{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+
+        }
+
+            .searchWrapper>input{
+                min-width: 18vw;
+                height: 26px;
+                border: none;
+                font-size: clamp(0.25em, 0.25em + 0.5vw, 1em);
+                outline: none;
+            }
+
+        .settingsSVG{
+            cursor: pointer;
+        }
+
+        .settingsSVG:hover path{
+            fill: var(--fill-svg) !important;
+        }

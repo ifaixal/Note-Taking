@@ -1,0 +1,23 @@
+.ButtonsForNotes{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.35rem 2rem;
+    gap: 1rem;
+}
+
+    .ArchieveNote, .DeleteNote{
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.75rem 1rem;
+        font-size: clamp(0.25em, 0.25em + 0.5vw, 1em);
+        border: 1.5px solid var(--border-color);
+        border-radius: 6px;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .ArchieveNote:hover svg path, .DeleteNote:hover svg path{
+        stroke: var(--fill-svg) !important;
+    }

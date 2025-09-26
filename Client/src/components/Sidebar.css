@@ -1,0 +1,68 @@
+.SidebarContainer{
+    border-right: 1.5px solid var(--border-color);
+    height: 100vh;
+    width: 15.5%;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+    .SectionAll-ArchieveNoteWrapper, .tagsWrapper{
+        padding: 0.5rem 0.25rem;
+    }
+
+    .SectionAll-ArchieveNoteWrapper{
+        border-bottom: 1.5px solid var(--border-color);
+        margin-top: 0.7rem;
+    }
+
+    .tagsWrapper{
+        font-size: clamp(0.75em, 1vw, 1em);
+        padding: 0rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .tagComponent{
+        display: flex;
+        flex-direction: column;
+    }
+
+        .AllNoteWrapper, .ArchieveNoteWrapper, .tagList{
+            font-size: clamp(0.75em, 1vw, 1em);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .AllNoteWrapper.active, .ArchieveNoteWrapper.active, .tagList.active{
+            background-color: var(--bg-dark);
+        }
+
+        .ArrowSVG{
+            display: none;
+        }
+
+        .AllNoteWrapper.active .ArrowSVG, .ArchieveNoteWrapper.active .ArrowSVG, .tagList.active .ArrowSVG{
+            display: flex;
+        }
+
+        .AllNoteWrapper:hover .svgHeadingWrapp>svg>path, .AllNoteWrapper.active .svgHeadingWrapp>svg>path{
+            fill: var(--fill-svg) !important;
+        }
+
+        .ArchieveNoteWrapper:hover .svgHeadingWrapp>svg>path, .tagList:hover .svgHeadingWrapp>svg>path, .ArchieveNoteWrapper.active .svgHeadingWrapp>svg>path, .tagList.active .svgHeadingWrapp>svg>path{
+            stroke: var(--fill-svg) !important;
+        }
+
+            .svgHeadingWrapp{
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        
