@@ -21,3 +21,78 @@
     .ArchieveNote:hover svg path, .DeleteNote:hover svg path{
         stroke: var(--fill-svg) !important;
     }
+
+    .AreYouSureToDel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.35); /* backdrop */
+        z-index: 1000;
+        animation: fadeIn 0.2s ease-out;
+      }
+      
+      .DeleteMainBody {
+        background: var(--bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        width: 280px;        /* small popup */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        position: relative;
+        animation: popIn 0.25s ease-out;
+      }
+      
+      .DeleteMainBody>h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem;
+      }
+      
+      .DeleteMainBody>p {
+        margin: 0 0 1.2rem 0;
+        color: #444;
+        font-size: 0.95rem;
+      }
+      
+      .buttonsConfirmation {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      
+      .buttonsConfirmation button {
+        flex: 1;
+        padding: 0.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      .buttonsConfirmation button:first-child {
+        background: #e0e0e0;
+      }
+      
+      .buttonsConfirmation button:last-child {
+        background: #d9534f;
+        color: #fff;
+      }
+
+      @keyframes fadeIn {
+        from { background: rgba(0, 0, 0, 0); }
+        to   { background: rgba(0, 0, 0, 0.35); }
+      }
+      
+      @keyframes popIn {
+        from {
+          opacity: 0;
+          transform: scale(0.85);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }

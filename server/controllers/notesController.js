@@ -25,7 +25,7 @@ const createNote = async (req, res) => {
         if (!tags)
             return res.status(400).json({status: false, message: "Need Tags"});
         if (!content)
-            return res.status(400).json({status: false, message: "Need Title"});
+            return res.status(400).json({status: false, message: "Need Content"});
         if (!user)
             return res.status(400).json({status: false, message: "Need User iD"});
 
@@ -37,7 +37,39 @@ const createNote = async (req, res) => {
     }
 }
 
+const getNotebyId = async (req, res) => {
+    try{
+        const noteId = req.params.id;
+
+        if (!noteId)
+            return res.status(400).json({status: false, message: "Note id is Required"});
+
+        const note = await Note.findById(noteId);
+
+        return res.status(201).json(note);
+    }   catch(err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
+const deleteNote = async (req, res) => {
+    try{
+        const noteId = req.params.id;
+
+        if (!noteId)
+            return res.status(400).json({status: false, message: "Note id is required"});
+
+        const deleted = await Note.findByIdAndDelete(noteId);
+
+        return res.status(201).json({deleted});
+    }   catch(err){
+        res.status(500).json({error: err.message});
+    }
+}
+
 module.exports = { 
     getNotes, 
-    createNote
+    createNote,
+    getNotebyId,
+    deleteNote
  }

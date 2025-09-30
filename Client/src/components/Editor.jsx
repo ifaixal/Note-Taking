@@ -1,14 +1,92 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Editor.css'
+import { Toaster, toast } from 'sonner'
+import useNotes from '../hooks/useNotes';
+import { createNote } from '../utils/api';
+import { formatDate } from '../utils/date';
 
 const Editor = () => {
-    const notes = [];
+    const [title, setTitle] = useState("");
+    const [tagsInput, setTagsInput] = useState("");
+    const [content, setContent] = useState("");
+    const { changeRefresh, selectedNote } = useNotes();
+
+    useEffect(() => {
+        if (selectedNote) {
+          setTitle(selectedNote.title || "");
+          setTagsInput(
+            Array.isArray(selectedNote.tags) ? selectedNote.tags.join(", ") : ""
+          );
+          setContent(selectedNote.content || "");
+        }
+    }, [selectedNote]);
+
+    const parseTags = (input) => {
+        if (!input) return []
+        return input
+          .split(",")              // split by comma
+          .map(tag => tag.trim())  // remove spaces around
+          .filter(tag => tag.length > 0) // remove empties
+    }
+
+    const handleSave = async () => {
+
+        if (title.trim() === ""){
+            toast.error("Title cannot be empty", {duration: 1000});
+            return;
+        }
+
+        if (tagsInput.trim() === ""){
+            toast.error("Tags cannot be empty", {duration: 1000});
+            return;
+        }
+
+        if (content.trim() === ""){
+            toast.error("Description cannot be empty", {duration: 1000});
+            return;
+        }
+
+        const tags = parseTags(tagsInput);
     
+        const newNote = {
+          title,
+          content,
+          tags
+        }
+    
+        try{
+            const data = await createNote(newNote); // ✅ already parsed
+            if (data.status) {
+                changeRefresh(); // ✅ trigger notes reload
+                toast.success("Saved Note Successfully");
+                setTitle("");
+                setTagsInput("");
+                setContent("");
+            } else {
+                toast.error(data?.message || "Failed to save note");
+            }
+        } catch (err){
+            toast.error("Failed to save Note");
+        }
+    }
+
+    const handleChange = async () => {
+
+    }
+
+    const handleClick = async () => {
+        if (selectedNote.length===0){
+            await handleSave();
+        }   else{
+            await handleChange();
+        }
+    }
+
   return (
     <div className='Editor'>
         <div className="Title-Tags-Time-Wrapper">
             <div className="TitleWrapper">
-                <input className='InputFieldTitle' type="text" placeholder='Enter a Title...'/>
+                <input className='InputFieldTitle' type="text" placeholder='Enter a Title...' value={title} onChange={(e) => setTitle(e.target.value)}/>
             </div>
 
             <div className="tagsWrapperEditor">
@@ -17,7 +95,7 @@ const Editor = () => {
                     <h2>Tags</h2>
                 </div>
                 <div className="TagInputWrapper">
-                    <input type="text" className='InputTags' placeholder='Add tags separated by commas (e.g. Work, Planning)'/>
+                    <input type="text" className='InputTags' placeholder='Add tags separated by commas (e.g. Work, Planning)' value={tagsInput} onChange={(e) => setTagsInput(e.target.value)}/>
                 </div>
             </div>
 
@@ -30,21 +108,22 @@ const Editor = () => {
                     <h2>Last Edited</h2>
                 </div>
                 <div className="TimeInputWrapper">
-                    {notes.length === 0 ? (<p>Not yet Saved</p>) : <p>{notes.time}</p>}
+                    {selectedNote.length === 0 ? (<p>Not yet Saved</p>) : <p>{formatDate(selectedNote.createdAt)}</p>}
                 </div>
             </div>
         </div>
 
         {/* Start of Editor */}
         <div className="descriptionInputField">
-            <textarea name="" id="description" placeholder='Start typing your note here...' rows={15}></textarea>
+            <textarea name="" id="description" placeholder='Start typing your note here...' rows={15} value={content} onChange={(e) => setContent(e.target.value)}></textarea>
         </div>
 
         {/* Start of Save Buttons */}
         <div className="ActionsButtons">
-            <button className='SaveButton'>Save Note</button>
+            <button className='SaveButton' onClick={handleClick}>{selectedNote ? 'Save Changes' : "Save Note"}</button>
             <button className='CancelButton'>Cancel</button>
         </div>
+        <Toaster richColors position="top-right"/>
     </div>
   )
 }
