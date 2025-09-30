@@ -19,6 +19,25 @@ export const getNotes = async () => {
     }
 }
 
+export const getArchieveNotes = async () => {
+    const uid = getOrCreateUID();
+    try{
+        const res = await fetch('http://localhost:3000/api/notes/archievedNotes', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-id': uid
+            }
+        })
+    
+        const data = await res.json();
+        return data;
+    }   catch(err){
+        console.error("Failed to get Archieved Notes: ", err);
+        return null;
+    }
+}
+
 export const createNote = async (newNote) => {
     newNote.user = getOrCreateUID();
 
@@ -67,9 +86,30 @@ export const deleteNote = async (id) => {
 
         const data = await res.json();
         return data;
-        
+
     }   catch(err){
         console.error("Failed to delete Note", err);
+        return null;
+    }
+}
+
+export const archieveNote = async (id) => {
+    try{
+        const res = await fetch(`http://localhost:3000/api/notes/archieve/${id}`,{
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!res.ok)
+            return null;
+
+        const data = await res.json();
+        return data;
+
+    }   catch(err){
+        console.error("Failed to archieve Note", err);
         return null;
     }
 }

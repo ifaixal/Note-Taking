@@ -16,6 +16,22 @@ const getNotes = async (req, res) => {
     }
 }
 
+const getArchievedNotes = async (req, res) => {
+    try{
+        const uid = req.header('x-user-id');
+
+        if (!uid)
+            return res.status(400).json({status: false, message: "User Id is must to get notes"});
+
+        const notes = await Note.find({user: uid, archieved: true});
+
+        return res.status(200).json(notes);
+
+    } catch (err){
+        res.status(500).json({ error: err.message });
+    }
+}
+
 const createNote = async (req, res) => {
     try{
         const { title, tags, content, user } = req.body;
@@ -64,6 +80,26 @@ const deleteNote = async (req, res) => {
         return res.status(201).json({deleted});
     }   catch(err){
         res.status(500).json({error: err.message});
+        return null;
+    }
+}
+
+const archieveNote = async (req, res) => {
+    try{
+        const noteId = req.params.id;
+
+        if (!noteId)
+            return res.status(400).json({status: false, message: "Note id is Required"});
+
+        const change = await Note.findOneAndUpdate(
+            { _id: noteId },
+            { $set: { archieved: true } },
+            { new: true })
+
+        return res.status(200).json({change});
+    }   catch (err){
+        res.status(500).json({error: err.message})
+        return null;
     }
 }
 
@@ -71,5 +107,7 @@ module.exports = {
     getNotes, 
     createNote,
     getNotebyId,
-    deleteNote
+    deleteNote,
+    archieveNote,
+    getArchievedNotes
  }
