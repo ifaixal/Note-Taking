@@ -37,8 +37,10 @@
 
         .settingsSVG{
             cursor: pointer;
+            transition: 0.2s all linear;
         }
 
         .settingsSVG:hover path{
             fill: var(--fill-svg) !important;
+            stroke: none !important;
         }

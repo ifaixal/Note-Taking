@@ -1,0 +1,15 @@
+.HomeMob{
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+    .HeadingSection{
+        font-size: clamp(1.25em, 1.5vw, 2em);
+        font-weight: 600;
+    }
+
+    .notAvailablePara{
+        font-size: clamp(1.3em, 1.5vw, 1.85em);
+    }

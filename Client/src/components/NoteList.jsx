@@ -1,16 +1,28 @@
 import React from 'react'
 import './NoteList.css'
+import useNotes from '../hooks/useNotes'
+import { formatDate } from '../utils/date'
 
-const NoteCard = () => {
+const NoteCard = ({note}) => {
     return (
-        <div>
-
+        <div className='NoteCardWrapper'>
+            <h3 className="noteTitle">{note.title}</h3>
+            {note.tags?.length > 0 && (
+                <div className="noteTags">
+                    {note.tags.map((tag, index) => (
+                        <span key={index} className="noteTag">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
+            <p className='noteTime'>{formatDate(note.createdAt)}</p>
         </div>
     )
 }
 
 const NoteList = () => {
-    const notes = [];
+    const { notes } = useNotes();
 
   return (
     <div className='NoteList'>
@@ -27,7 +39,7 @@ const NoteList = () => {
                 )
                 : 
                 (
-                    notes.map(note => <NoteCard />)
+                    notes.map(note => <NoteCard key={note._id} note={note}/>)
                 )
             }
         </div>

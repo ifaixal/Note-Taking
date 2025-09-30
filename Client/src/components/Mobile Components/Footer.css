@@ -1,0 +1,48 @@
+.Footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem 0rem;
+    border-top: 1.8px solid var(--border-color);
+}
+
+    .Home, .Search, .Archieve, .Tags, .ThemeChange{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        transition: 0.2s all linear;
+    }
+
+    .FooterHeading{
+        font-size: clamp(0.8em, 0.8vw, 1em);
+    }
+
+    .Home.active, .Search.active, .Archieve.active, .Tags.active{
+        background-color: var(--bg-dark);
+        color: var(--fill-svg);
+    }
+
+    .Home.active svg path, .Search.active svg path, .ThemeChange.active svg path{
+        fill: var(--fill-svg) !important;
+    }
+
+    .ThemeChange.active svg path{
+        stroke: none !important;
+    }
+
+    .Archieve.active svg path, .Tags.active svg path{
+        stroke: var(--fill-svg);
+    }
+
+    @media (max-width: 320px) {
+        .FooterHeading{
+            display: none;
+        }
+    }
