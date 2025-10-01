@@ -103,11 +103,62 @@ const archieveNote = async (req, res) => {
     }
 }
 
+const getTags = async (req, res) => {
+    try{
+        const uid = req.header('x-user-id');
+
+        if (!uid)
+            return res.status(400).json({status: false, message: "User Id is must to get notes"});
+
+        const tags = await Note.distinct("tags", { archieved: false, user: uid });
+        return res.status(200).json({tags});
+    }   catch(err){
+        res.status(500).json({error: err.message})
+        return null;
+    }
+}
+
+const getArchieveTags = async (req, res) => {
+    try{
+        const uid = req.header('x-user-id');
+
+        if (!uid)
+            return res.status(400).json({status: false, message: "User Id is must to get notes"});
+
+        const tags = await Note.distinct("tags", { archieved: true, user: uid });
+        return res.status(200).json({tags});
+    }   catch(err){
+        res.status(500).json({error: err.message})
+        return null;
+    }
+}
+
+const getNotesbyTag = async (req, res) => {
+    try{
+        const uid = req.header('x-user-id');
+        const tag = req.params.tag;
+        if (!uid)
+            return res.status(400).json({status: false, message: "User Id is must to get notes"});
+
+        if (!tag)
+            return res.status(400).json({status: false, message: "Tag is required"});
+
+        const notesbyTag = await Note.find({user: uid, tags: tag})
+        return res.status(200).json(notesbyTag);
+    }   catch(err) {
+        res.status(500).json({error: err.message})
+        return null;
+    }
+}
+
 module.exports = { 
     getNotes, 
     createNote,
     getNotebyId,
     deleteNote,
     archieveNote,
-    getArchievedNotes
+    getArchievedNotes,
+    getTags,
+    getArchieveTags,
+    getNotesbyTag
  }

@@ -113,3 +113,60 @@ export const archieveNote = async (id) => {
         return null;
     }
 }
+
+export const getTags = async () => {
+    const uid = getOrCreateUID();
+    try{
+        const res = await fetch('http://localhost:3000/api/notes/getTags', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-id': uid
+            }
+        })
+    
+        const data = await res.json();
+        return data?.tags;
+    }   catch(err){
+        console.error("Failed to get Tags: ", err);
+        return null;
+    }
+}
+
+export const getArchieveTags = async () => {
+    const uid = getOrCreateUID();
+    try{
+        const res = await fetch('http://localhost:3000/api/notes/getArchieveTags', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-id': uid
+            }
+        })
+    
+        const data = await res.json();
+        return data?.tags;
+    }   catch(err){
+        console.error("Failed to get Tags: ", err);
+        return null;
+    }
+}
+
+export const getNotesbyTag = async (tag) => {
+    const uid = getOrCreateUID();
+    try{
+        const res = await fetch(`http://localhost:3000/api/notes/getNotebyTags/${tag}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-id': uid
+            }
+        })
+    
+        const data = await res.json();
+        return data;
+    }   catch(err){
+        console.error("Failed to get Tags: ", err);
+        return null;
+    }
+}

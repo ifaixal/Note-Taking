@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getNotes, getArchieveNotes } from '../utils/api';
+import { getNotes, getArchieveNotes, getTags, getArchieveTags, getNotesbyTag } from '../utils/api';
 
 export const NotesContext = createContext();
 
@@ -9,21 +9,33 @@ export function NotesProvider({ children }) {
   const [refresh, setRefresh] = useState(false);
   const [selectedNote, setSelectedNote] = useState([]);
   const [selectedSection, setSelectedSection] = useState("All Notes");
+  const [tagsList, setTagsList] = useState([]);
 
   const changeRefresh = () => {
     setRefresh(prev => !prev);
   };
 
   useEffect(() => {
-    if (selectedSection == "All Notes")
+    if (selectedSection == "All Notes"){
       getNotes().then(setNotes);
-    else if (selectedSection == "Archieved Notes")
+      getTags().then(setTagsList);
+    }
+      
+    else if (selectedSection == "Archieved Notes"){
       getArchieveNotes().then(setNotes);
+      getArchieveTags().then(setTagsList);
+    }
+
+    else{
+      getNotesbyTag(selectedSection).then(setNotes);
+      setTagsList([selectedSection]);
+    }
+      
 
   }, [refresh, selectedSection])
 
   return (
-    <NotesContext.Provider value={{ notes, changeRefresh, selectedNote, setSelectedNote, selectedSection, setSelectedSection }}>
+    <NotesContext.Provider value={{ notes, changeRefresh, selectedNote, setSelectedNote, selectedSection, setSelectedSection, tagsList }}>
       {children}
     </NotesContext.Provider>
   );
