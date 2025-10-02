@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Routes, Route} from "react-router-dom";
 import './Home.css'
 import Header from '../components/Header'
 import SideBar from '../components/Sidebar'
@@ -8,10 +9,15 @@ import ButtonsActions from '../components/ButtonsActions'
 import HeaderMob from '../components/Mobile Components/HeaderMob'
 import HomeMob from '../components/Mobile Components/HomeMob'
 import Footer from '../components/Mobile Components/Footer'
+import useNotes from '../hooks/useNotes';
+import SearchMob from '../components/Mobile Components/SearchMob';
+import ArchieveMob from '../components/Mobile Components/ArchieveMob';
+import Tags from '../components/Mobile Components/Tags';
 
 const Home = () => {
   let breakpoint = 769;
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
+  const { currentLinkMob } = useNotes();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < breakpoint);
@@ -23,8 +29,13 @@ const Home = () => {
     return(
       <div className="MobileInterface">
         <HeaderMob></HeaderMob>
-        <HomeMob></HomeMob>
-        <Footer></Footer>
+        { 
+          currentLinkMob==="Home" ? <HomeMob /> : 
+          currentLinkMob === "Search" ? <SearchMob /> : 
+          currentLinkMob === "Archieve" ? <ArchieveMob /> : 
+          <Tags />
+        }
+        <Footer />
       </div>
     );
   }

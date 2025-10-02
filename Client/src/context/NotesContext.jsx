@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getNotes, getArchieveNotes, getTags, getArchieveTags, getNotesbyTag } from '../utils/api';
+import { getNotes, getArchieveNotes, getTags, getArchieveTags, getNotesbyTag, getNotebyId } from '../utils/api';
 
 export const NotesContext = createContext();
 
@@ -10,6 +10,13 @@ export function NotesProvider({ children }) {
   const [selectedNote, setSelectedNote] = useState([]);
   const [selectedSection, setSelectedSection] = useState("All Notes");
   const [tagsList, setTagsList] = useState([]);
+  const [currentLinkMob, setCurrentLinkMob] = useState("Home");
+
+  const handleSelectedNote = async (id) => {
+    const data = await getNotebyId(id);
+    if (data)
+        setSelectedNote(data);
+}
 
   const changeRefresh = () => {
     setRefresh(prev => !prev);
@@ -24,18 +31,30 @@ export function NotesProvider({ children }) {
     else if (selectedSection == "Archieved Notes"){
       getArchieveNotes().then(setNotes);
       getArchieveTags().then(setTagsList);
-    }
-
-    else{
-      getNotesbyTag(selectedSection).then(setNotes);
-      setTagsList([selectedSection]);
-    }
-      
+    } 
 
   }, [refresh, selectedSection])
 
+  useEffect(() => {
+    if (currentLinkMob === "Home")
+      getNotes().then(setNotes);
+    else if (currentLinkMob == "Archieve")
+      getArchieveNotes().then(setNotes);
+
+  }, [currentLinkMob])
+
   return (
-    <NotesContext.Provider value={{ notes, changeRefresh, selectedNote, setSelectedNote, selectedSection, setSelectedSection, tagsList }}>
+    <NotesContext.Provider value={{ 
+    notes, 
+    changeRefresh, 
+    selectedNote, 
+    setSelectedNote, 
+    selectedSection, 
+    setSelectedSection, 
+    tagsList, 
+    currentLinkMob, 
+    setCurrentLinkMob, 
+    handleSelectedNote }}>
       {children}
     </NotesContext.Provider>
   );

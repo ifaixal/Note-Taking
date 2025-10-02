@@ -11,5 +11,40 @@
     }
 
     .notAvailablePara{
-        font-size: clamp(1.3em, 1.5vw, 1.85em);
+        font-size: clamp(0.75rem, 1vw, 1.25rem);
+    }
+
+    .NoteCardWrapperMob{
+        background-color: var(--bg-dark);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: 0.2s all linear;
+    }
+
+    .noteTitleMob{
+        font-size: clamp(1em, 1.25vw, 2em);
+        font-weight: 600;
+    }
+
+    .noteTagsMob{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .noteTagMob{
+        font-size: clamp(0.65em, 1vw, 1.5em);
+        background-color: var(--tag-mob);
+        padding: 0.35rem;
+        font-weight: 600;
+        padding: 0.35rem;
+        border-radius: 4px;
+    }
+    
+    .noteTimeMobile{
+        font-size: clamp(0.5em, 1vw, 1.5em);
     }

@@ -7,6 +7,7 @@
   --fill-svg: #335CFF;
   --border-color: #E0E4EA;
   --dark-text: #99A0AE;
+  --tag-mob: #ebebeb;
 }
 
 [data-theme="dark"] {

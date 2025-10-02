@@ -1,0 +1,32 @@
+.SearchMob{
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+    .SearchMob>h1{
+        font-size: clamp(1.5em, 1.75vw, 2.25em);
+        font-weight: 600;
+    }
+
+    .inputwrapper{
+        background-color: var(--bg-dark);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+
+        .inputwrapper>input{
+            border: 0px;
+            font-size: 14px;
+            width: 100%;
+            background: none;
+            outline: none;
+        }
+
+        .unavailable{
+            font-size: clamp(0.75rem, 1vw, 1.25rem);
+        }

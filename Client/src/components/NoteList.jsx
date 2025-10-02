@@ -2,7 +2,6 @@ import React from 'react'
 import './NoteList.css'
 import useNotes from '../hooks/useNotes'
 import { formatDate } from '../utils/date'
-import { getNotebyId } from '../utils/api'
 
 const NoteCard = ({note, onClick}) => {
     return (
@@ -23,13 +22,7 @@ const NoteCard = ({note, onClick}) => {
 }
 
 const NoteList = () => {
-    const { notes, setSelectedNote } = useNotes();
-
-    const handleSelectedNote = async (id) => {
-        const data = await getNotebyId(id);
-        if (data)
-            setSelectedNote(data);
-    }
+    const { notes, setSelectedNote, handleSelectedNote } = useNotes();
 
   return (
     <div className='NoteList'>
