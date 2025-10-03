@@ -1,0 +1,83 @@
+.CreateNoteMob{
+    display: flex;
+    flex-direction: column;
+}
+
+.goBack-cancel-save{
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+}
+
+    .goBack-cancel-save>div{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: clamp(0.65em, 1.5vw, 1.75em);
+    }
+        .SaveNotePara{
+            color: var(--fill-svg);
+        }
+
+    .EditorMob{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 1.25rem;
+    }
+
+    .titleWrapper{
+        padding: 0.25rem;
+        overflow: hidden;
+    }
+
+        .titleWrapper>input{
+            width: 100%;
+            height: 4vh;
+            font-size: clamp(1.25em, 1.5vw, 1.75em);
+            font-weight: 600;
+            outline: none;
+            border: none;
+        }
+
+        .tagsWrapper-LastEdited-Mob{
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 0rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tagsWrapperMob, .timeWrapperMob{
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+            .TagInputWrapper>input{
+                font-size: 0.75em;
+            }
+
+            .TimeInputWrapper{
+                font-size: 0.75em;
+            }
+
+        .svgHeadWrapperMob{
+            display: flex;
+            gap: 0.5rem;
+            flex: 0.5;
+            font-size: 0.75em;
+        }
+
+        .TextAreaMob{
+            padding: 0.5rem;
+        }
+
+        .TextAreaMob>textarea{
+            resize: none;
+            width: 100%;
+            height: 180px;
+            border: none;
+            outline: none;
+        }

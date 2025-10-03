@@ -1,0 +1,13 @@
+.CreateButton{
+    display: flex;
+    position: fixed;
+    right: 2rem;
+    bottom: 7rem;
+    padding: 0.5rem;
+    background-color: var(--fill-svg);
+    border-radius: 50%;
+}
+
+.CreateButton>svg>path{
+    fill: #fff;
+}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route} from "react-router-dom";
 import './Home.css'
 import Header from '../components/Header'
 import SideBar from '../components/Sidebar'
@@ -13,6 +12,8 @@ import useNotes from '../hooks/useNotes';
 import SearchMob from '../components/Mobile Components/SearchMob';
 import ArchieveMob from '../components/Mobile Components/ArchieveMob';
 import Tags from '../components/Mobile Components/Tags';
+import ButtonCreate from '../components/Mobile Components/ButtonCreate';
+import CreateNote from '../components/Mobile Components/CreateNote';
 
 const Home = () => {
   let breakpoint = 769;
@@ -33,8 +34,10 @@ const Home = () => {
           currentLinkMob==="Home" ? <HomeMob /> : 
           currentLinkMob === "Search" ? <SearchMob /> : 
           currentLinkMob === "Archieve" ? <ArchieveMob /> : 
+          currentLinkMob === "Create" ? <CreateNote /> :
           <Tags />
         }
+        { currentLinkMob != "Create" ? <ButtonCreate /> : "" }
         <Footer />
       </div>
     );

@@ -10,12 +10,13 @@ export function NotesProvider({ children }) {
   const [selectedNote, setSelectedNote] = useState([]);
   const [selectedSection, setSelectedSection] = useState("All Notes");
   const [tagsList, setTagsList] = useState([]);
-  const [currentLinkMob, setCurrentLinkMob] = useState("Home");
+  const [currentLinkMob, setCurrentLinkMob] = useState("Create");
 
   const handleSelectedNote = async (id) => {
     const data = await getNotebyId(id);
     if (data)
         setSelectedNote(data);
+    setCurrentLinkMob("Create");
 }
 
   const changeRefresh = () => {
@@ -31,7 +32,11 @@ export function NotesProvider({ children }) {
     else if (selectedSection == "Archieved Notes"){
       getArchieveNotes().then(setNotes);
       getArchieveTags().then(setTagsList);
-    } 
+    }
+
+    else{
+      getNotesbyTag(selectedSection).then(setNotes);
+    }
 
   }, [refresh, selectedSection])
 
@@ -40,8 +45,15 @@ export function NotesProvider({ children }) {
       getNotes().then(setNotes);
     else if (currentLinkMob == "Archieve")
       getArchieveNotes().then(setNotes);
+    else if (currentLinkMob == "Tags"){
+      Promise.all([getTags(), getArchieveTags()])
+      .then(([tags, archTags]) => {
+        setTagsList([...new Set([...tags, ...archTags])]);
+      });
+    }
 
-  }, [currentLinkMob])
+
+  }, [currentLinkMob, refresh])
 
   return (
     <NotesContext.Provider value={{ 
